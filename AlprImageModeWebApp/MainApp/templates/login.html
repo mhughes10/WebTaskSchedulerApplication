@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Packetalk</title>
+</head>
+<body>
+	<h1>Login</h1>
+	
+	<form method="POST" action="{% url 'verify' %}" style="display: inline;">
+		{% csrf_token %}
+		<input type="text" name="username">
+		<input type="text" name="password">
+		<button type="submit">Login</button>
+	</form>
+</body>
+</html>

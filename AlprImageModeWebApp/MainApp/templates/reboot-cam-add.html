@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Packetalk</title>
+</head>
+<body>
+	<h1>Reboot Add  Cam</h1>
+	<form method="POST" id="home" action="{% url 'home' %}">
+			{% csrf_token %}
+			<button type="submit" id="Home Button">Home</button>
+		</form>
+	<form method="POST" action="{% url 'add' %}" style="display: inline;">
+		{% csrf_token %}
+		{{ addCam.as_p }}
+		<input type="hidden" name="action" value="reboot" >
+		<button type="submit">Add</button>
+	</form>
+</body>
+</html>
