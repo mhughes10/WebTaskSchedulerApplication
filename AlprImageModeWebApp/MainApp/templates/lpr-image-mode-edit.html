@@ -11,6 +11,8 @@
 		<button type="submit" id="Home Button">Home</button>
 	</form>
 	
+	<p></p>
+	
 	<form method="POST" id="setSched" action="{% url 'setlprImageModeScheduler' %}">
 		{% csrf_token %}
 		{{ setSchedule.as_p }}
