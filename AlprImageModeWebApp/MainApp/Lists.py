@@ -1,6 +1,7 @@
 from . import Configs
 import csv
 
+
 #this is the class that manages the list given to to the task
 class LprImageModeList():
     def __init__(self):
