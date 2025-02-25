@@ -32,7 +32,6 @@ class LprImageMode():
             
             print("Retrying:")
             print(self.retriesDisable)
-            time.sleep(5)
             self.turnOffImageModeRetries(self.retriesDisable)
             self.retriesDisable = []
             
@@ -64,7 +63,6 @@ class LprImageMode():
         if self.retriesEnable != []:
             print("Retrying:") 
             print(self.retriesEnable) 
-            time.sleep(5)
             self.turnOnImageModeRetries(self.retriesEnable)
             self.retriesEnable = []
         else:
@@ -137,8 +135,9 @@ class LprImageMode():
                 if response.status_code == 200:
                     print(f"{conDetail} lpr image mode successfully disabled")
                 else:
-                    print(f"failed to disable image mode for camera ({conDetail}) status code is {response.status_code}")
-                    self.logger.error(f"failed to disable image mode for camera ({conDetail}) status code is {response.status_code}")
+                    print(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    self.logger.error(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    
             except requests.exceptions.RequestException:
                 
                 self.retriesDisable.append(element)
@@ -177,8 +176,8 @@ class LprImageMode():
                     
                 else:
                     
-                    print(f"failed to enable image mode for camera ({conDetail}) status code is {response.status_code}")
-                    self.logger.error(f"failed to enable image mode for camera ({conDetail}) status code is {response.status_code}")
+                    print(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    self.logger.error(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
                     
             except requests.exceptions.RequestException:
                 
@@ -265,9 +264,10 @@ class LprImageMode():
                 if response.status_code == 200:
                     print(f"{conDetail} lpr image mode successfully disabled")
                 else:
-                    self.logger.error(f"failed to disable image mode for camera ({conDetail}) status code is {response.status_code}")
+                    print(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    self.logger.error(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    
             except requests.exceptions.RequestException as e:
-                print(f"{conDetail}: {e}")
                 self.logger.error(f"{conDetail}: {e}")
                 self.failedDisable.append(element)
                 
@@ -308,9 +308,10 @@ class LprImageMode():
                 if response.status_code == 200:
                     print(f"{conDetail} lpr image mode successfully enabled")
                 else:
-                    self.logger.error(f"failed to enable image mode for camera ({conDetail}) status code is {response.status_code}")
+                    print(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    self.logger.error(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    
             except requests.exceptions.RequestException as e:
-                print(f"{conDetail}: {e}")
                 self.logger.error(f"{conDetail}: {e}")
                 self.failedEnable.append(element)
                 
@@ -392,9 +393,8 @@ class Reboot():
                     print(f"{conDetail} successfully rebooted")
                     
                 else:
-                    
-                    print(f"failed to reboot camera ({conDetail}) status code is {response.status_code}")
-                    self.logger.error(f"failed to reboot camera ({conDetail}) status code is {response.status_code}")
+                    print(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    self.logger.error(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
                     
             except requests.exceptions.RequestException:
                 
@@ -475,15 +475,15 @@ class Reboot():
                 #post the changes
                 response = self.session.post(requestUrl, auth=HTTPDigestAuth(f"{camUserN}", f"{camPass}"), headers={"Content-Type": "application/json"}, timeout=5)
                 
-                #response.raise_for_status()
+                response.raise_for_status()
                 
                 if response.status_code == 200:
                     print(f"{conDetail} successfully rebooted")
                 else:
-                    print(f"failed to reboot camera ({conDetail}) status code is {response.status_code}")
-                    self.logger.error(f"failed to reboot camera ({conDetail}) status code is {response.status_code}")
+                    print(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    self.logger.error(f"UNEXPECTED RESPONSE FOR: ({conDetail}) status code is {response.status_code}")
+                    
             except requests.exceptions.RequestException as e:
-                print(f"{conDetail}: {e}")
                 self.logger.error(f"{conDetail}: {e}")
                 self.failedReboot.append(element)
                 

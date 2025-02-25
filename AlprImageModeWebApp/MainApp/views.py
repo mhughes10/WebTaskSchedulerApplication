@@ -5,14 +5,16 @@ from . import Forms
 def home(request):
     
     return render(request, "home.html")
-
+    
 def login(request):
     
     return render(request, "login.html")
-
+    
 def alprImageModeTask(request):
     
     confState = lprImageModeTask.sched.conf.getConfIsEnabled()
+    
+    currentSched = lprImageModeTask.sched.conf.getConfSchedTime()
     
     setSchedule = Forms.SetTwoSchedulerTimes()
     
@@ -27,8 +29,8 @@ def alprImageModeTask(request):
     endPointList = lprImageModeTask.sched.lprImageMode.list.getEndpointList()
     
     # there cannot be a space between ":
-    context = {"endPointList": endPointList, "setSchedule": setSchedule, "isEnabled": isEnabled}
-        
+    context = {"endPointList": endPointList, "setSchedule": setSchedule, "isEnabled": isEnabled, "currentSched": currentSched}
+    
     return render(request, "lpr-image-mode-edit.html", context)
 
 def editCamInfo(request):
@@ -77,6 +79,8 @@ def rebootCamTask(request):
     
     confState = rebootTask.sched.conf.getConfIsEnabled()
     
+    rebootTime = rebootTask.sched.conf.getConfSchedTime()
+    
     setSchedule = Forms.SetOneSchedulerTime()
     
     # determines wether check box is set to true or false on server or page reload.
@@ -90,6 +94,6 @@ def rebootCamTask(request):
     endPointList = rebootTask.sched.reboot.list.getEndpointList()
     
     # there cannot be a space between ":
-    context = {"endPointList": endPointList, "setSchedule": setSchedule, "isEnabled": isEnabled}
+    context = {"endPointList": endPointList, "setSchedule": setSchedule, "isEnabled": isEnabled, "rebootTime": rebootTime}
         
     return render(request, "reboot-edit.html", context)

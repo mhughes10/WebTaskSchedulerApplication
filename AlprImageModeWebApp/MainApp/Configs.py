@@ -34,6 +34,13 @@ class LprImageModeConfig():
         self.config.read(self.configFilePath)
         self.isEnabled = self.config["settings"]["isEnabled"]
         return self.isEnabled
+    
+    def getConfSchedTime(self):
+        
+        self.uT1 = self.config["settings"]["executetime1"]
+        self.uT2 = self.config["settings"]["executetime2"]
+        
+        return f"Enable at: [{self.uT1}] | Disable at: [{self.uT2}]"
 
 class RebootConfig():
     
@@ -67,3 +74,9 @@ class RebootConfig():
         self.config.read(self.configFilePath)
         self.isEnabled = self.config["settings"]["isEnabled"]
         return self.isEnabled
+    
+    def getConfSchedTime(self):
+        
+        self.uT1 = self.config["settings"]["executetime1"]
+        
+        return f"Reboot at: [{self.uT1}]"

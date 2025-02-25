@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html>
+	<style>
+		table, th, td{
+			border:1px solid black;
+		}
+		
+		td{
+			text-align: center;
+		}
+	</style>
 <head>
 	<title>Packetalk</title>
 </head>
@@ -10,8 +19,6 @@
 		{% csrf_token %}
 		<button type="submit" id="Home Button">Home</button>
 	</form>
-	
-	<p></p>
 	
 	<form method="POST" id="setSched" action="{% url 'setlprImageModeScheduler' %}">
 		{% csrf_token %}
@@ -28,24 +35,31 @@
 		{% csrf_token %}
 		<button type="submit">add camera</button>
 	</form>
-	
+	<p>{{ currentSched }}</p>
+	<table style="width:100%">
+	<tr>
+		<th>IP/DNS</th>
+		<th>Port</th>
+		<th>Actions</th>
+	</tr>
 	<!-- i just ended up adding a form to each li element -->
-	<ul id="endPointUl">
+	<tbody id="endPointUl">
 		{% for endPoint in endPointList %}
-			<li id="{{ endPoint }}">
-				<span class="ip"></span>
-				<span class="port"></span>
-				<form method="POST" action="{% url 'editCamInfo' %}" style="display: inline;"> {% csrf_token %} <input type="hidden" name="endPoint" value="{{endPoint}}"> <input type="hidden" name="action" value="lprImageMode"> <button type="submit">edit</button> </form>
-				<form method="POST" action="{% url 'delete' %}" style="display: inline;"> {% csrf_token %} <input type="hidden" name="endPoint" value="{{endPoint}}"> <input type="hidden" name="action" value="lprImageMode"> <button type="submit">delete</button> </form>
-			</li>
+			<tr id="{{ endPoint }}">
+				<td class="ip"></td>
+				<td class="port"></td>
+				<td><form method="POST" action="{% url 'editCamInfo' %}" style="display: inline;"> {% csrf_token %} <input type="hidden" name="endPoint" value="{{endPoint}}"> <input type="hidden" name="action" value="lprImageMode"> <button type="submit">edit</button> </form>
+				<form method="POST" action="{% url 'delete' %}" style="display: inline;"> {% csrf_token %} <input type="hidden" name="endPoint" value="{{endPoint}}"> <input type="hidden" name="action" value="lprImageMode"> <button type="submit">delete</button> </form></td>
+			</tr>
 		{% endfor %}
-	</ul>
+	</tbody>
+	</table>
 	<script>
 		const checkbox = document.getElementById("id_isEnabled");
 		checkbox.addEventListener("change", function() {document.getElementById('isEnabled').submit();});
 		
 		document.addEventListener('DOMContentLoaded', function() {
-		        var listItems = document.querySelectorAll('#endPointUl li');
+		        var listItems = document.querySelectorAll('#endPointUl tr');
 		
 		listItems.forEach(function(item) {
 		            var endPoint = item.id;
